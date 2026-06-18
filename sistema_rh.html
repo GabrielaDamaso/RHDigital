@@ -1,0 +1,517 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-w:220px;--hdr:56px;
+  --color-background-primary:#fff;
+  --color-background-secondary:#f5f5f4;
+  --color-background-tertiary:#eeede9;
+  --color-background-info:#e6f1fb;
+  --color-background-success:#eaf3de;
+  --color-background-warning:#faeeda;
+  --color-background-danger:#fcebeb;
+  --color-text-primary:#1a1a18;
+  --color-text-secondary:#5f5e5a;
+  --color-text-tertiary:#888780;
+  --color-text-info:#185fa5;
+  --color-text-success:#3b6d11;
+  --color-text-warning:#854f0b;
+  --color-text-danger:#a32d2d;
+  --color-border-tertiary:rgba(0,0,0,0.12);
+  --color-border-secondary:rgba(0,0,0,0.22);
+  --color-border-info:#b5d4f4;
+  --color-border-success:#c0dd97;
+  --color-border-danger:#f7c1c1;
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --font-sans:system-ui,-apple-system,sans-serif;
+}
+body{font-family:var(--font-sans);background:var(--color-background-tertiary);min-height:100vh}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar-w);background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:10}
+.logo{padding:16px 20px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:10px}
+.logo-badge{width:32px;height:32px;background:#185FA5;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500}
+.logo-text{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.logo-sub{font-size:11px;color:var(--color-text-secondary)}
+.nav{padding:12px 0;flex:1;overflow-y:auto}
+.nav-section{padding:4px 20px 8px;font-size:11px;color:var(--color-text-tertiary);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 20px;font-size:13.5px;color:var(--color-text-secondary);cursor:pointer;transition:background .15s,color .15s;border-radius:0}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{background:var(--color-background-info);color:var(--color-text-info);font-weight:500}
+.nav-item i{font-size:17px;width:20px;text-align:center}
+.user-area{padding:12px 16px;border-top:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#185FA5;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:500;flex-shrink:0}
+.user-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.user-role{font-size:11px;color:var(--color-text-secondary)}
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
+.header{height:var(--hdr);background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:5}
+.header-title{font-size:15px;font-weight:500;color:var(--color-text-primary);flex:1}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.badge-blue{background:var(--color-background-info);color:var(--color-text-info)}
+.badge-green{background:var(--color-background-success);color:var(--color-text-success)}
+.badge-amber{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-red{background:var(--color-background-danger);color:var(--color-text-danger)}
+.content{padding:24px 28px;flex:1}
+.page{display:none}
+.page.active{display:block}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:24px}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:16px}
+.metric-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
+.metric-value{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.metric-sub{font-size:11px;color:var(--color-text-secondary);margin-top:4px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:20px}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title i{font-size:18px;color:#185FA5}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+td{padding:10px 12px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+.section-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;font-weight:500;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);transition:background .15s}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:#185FA5;color:#fff;border-color:#185FA5}
+.btn-primary:hover{background:#0C447C}
+.btn-sm{padding:5px 12px;font-size:12px}
+.form-group{margin-bottom:16px}
+.form-label{font-size:13px;color:var(--color-text-secondary);margin-bottom:6px;display:block}
+.form-input{width:100%;padding:8px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.form-select{width:100%;padding:8px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)}
+.timeline-item{display:flex;gap:16px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.timeline-item:last-child{border-bottom:none}
+.timeline-dot{width:8px;height:8px;border-radius:50%;background:#185FA5;margin-top:6px;flex-shrink:0}
+.timeline-content{flex:1}
+.timeline-label{font-size:13px;color:var(--color-text-primary)}
+.timeline-date{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+.progress-bar{height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;background:#185FA5;border-radius:3px;transition:width .5s}
+.alert{padding:12px 16px;border-radius:var(--border-radius-md);font-size:13px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
+.alert-info{background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)}
+.alert-success{background:var(--color-background-success);color:var(--color-text-success)}
+.alert-warning{background:var(--color-background-warning);color:var(--color-text-warning)}
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.step{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-text-secondary)}
+.step.done{color:var(--color-text-success)}
+.step.active{color:#185FA5;font-weight:500}
+.step-num{width:26px;height:26px;border-radius:50%;border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;background:var(--color-background-primary)}
+.step.done .step-num{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)}
+.step.active .step-num{background:#185FA5;color:#fff;border-color:#185FA5}
+.step-line{flex:1;height:0.5px;background:var(--color-border-tertiary);margin:0 8px}
+.solicit-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s}
+.solicit-card:hover{background:var(--color-background-secondary)}
+.solicit-icon{width:40px;height:40px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:20px}
+.freq-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.freq-day{font-size:12px;color:var(--color-text-secondary);width:40px;font-weight:500}
+.freq-bar{flex:1;height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
+.freq-fill{height:100%;border-radius:4px}
+.freq-status{font-size:12px;width:60px;text-align:right}
+</style>
+
+<h2 class="sr-only">Sistema de RH Digital RH Digital — Portal do Servidor</h2>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="logo">
+      <div class="logo-badge">ORG</div>
+      <div>
+        <div class="logo-text">RH Digital</div>
+        <div class="logo-sub">RH Digital</div>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="nav-section">Portal</div>
+      <div class="nav-item active" onclick="navigate('dashboard',this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard</div>
+      <div class="nav-item" onclick="navigate('contracheque',this)"><i class="ti ti-file-invoice" aria-hidden="true"></i> Contracheque</div>
+      <div class="nav-section">Autoatendimento</div>
+      <div class="nav-item" onclick="navigate('ferias',this)"><i class="ti ti-beach" aria-hidden="true"></i> Férias</div>
+      <div class="nav-item" onclick="navigate('licencas',this)"><i class="ti ti-clipboard-heart" aria-hidden="true"></i> Licenças</div>
+      <div class="nav-item" onclick="navigate('frequencia',this)"><i class="ti ti-clock" aria-hidden="true"></i> Frequência</div>
+      <div class="nav-section">Gestão de Pessoas</div>
+      <div class="nav-item" onclick="navigate('servidores',this)"><i class="ti ti-users" aria-hidden="true"></i> Servidores</div>
+      <div class="nav-item" onclick="navigate('workflows',this)"><i class="ti ti-git-pull-request" aria-hidden="true"></i> Aprovações</div>
+    </div>
+    <div class="user-area">
+      <div class="avatar">JF</div>
+      <div>
+        <div class="user-name">Josiane F. Souza</div>
+        <div class="user-role">Servidora · SGP</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="header">
+      <span class="header-title" id="hdr-title">Dashboard</span>
+      <span class="badge badge-green"><i class="ti ti-circle-check" style="font-size:13px"></i> Sistema operacional</span>
+      <button class="btn btn-sm" onclick="sendPrompt('Preciso de ajuda com o sistema de RH do RH Digital')"><i class="ti ti-help" aria-hidden="true"></i> Ajuda ↗</button>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="alert alert-info"><i class="ti ti-info-circle" aria-hidden="true"></i> Bem-vinda, Josiane! Você tem 2 solicitações pendentes de aprovação e 1 notificação de férias próximas.</div>
+        <div class="grid-4">
+          <div class="metric"><div class="metric-label">Dias de férias disponíveis</div><div class="metric-value">30</div><div class="metric-sub">Período 2024/2025</div></div>
+          <div class="metric"><div class="metric-label">Banco de horas</div><div class="metric-value">+12h40</div><div class="metric-sub">Saldo acumulado</div></div>
+          <div class="metric"><div class="metric-label">Frequência maio</div><div class="metric-value">96%</div><div class="metric-sub">23 dias trabalhados</div></div>
+          <div class="metric"><div class="metric-label">Próximo salário</div><div class="metric-value">R$ 8.420</div><div class="metric-sub">Previsão em 7 dias</div></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><i class="ti ti-bell" aria-hidden="true"></i> Atividades recentes</div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-label">Solicitação de férias enviada</div><div class="timeline-date">21/05/2026 às 14:32 · Aguardando aprovação</div></div><span class="badge badge-amber">Pendente</span></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:#0F6E56"></div><div class="timeline-content"><div class="timeline-label">Contracheque de abril disponível</div><div class="timeline-date">02/05/2026 às 08:00</div></div><span class="badge badge-green">Novo</span></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:#0F6E56"></div><div class="timeline-content"><div class="timeline-label">Teletrabalho aprovado — maio</div><div class="timeline-date">30/04/2026</div></div><span class="badge badge-green">Aprovado</span></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:#888"></div><div class="timeline-content"><div class="timeline-label">Declaração funcional emitida</div><div class="timeline-date">15/04/2026</div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="ti ti-apps" aria-hidden="true"></i> Acesso rápido</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="solicit-card" onclick="navigate('ferias',document.querySelector('[onclick*=ferias]'))">
+                <div><div style="font-size:13px;font-weight:500">Solicitar Férias</div><div style="font-size:12px;color:var(--color-text-secondary)">30 dias disponíveis</div></div>
+                <div class="solicit-icon" style="background:var(--color-background-info);color:var(--color-text-info)"><i class="ti ti-beach" aria-hidden="true"></i></div>
+              </div>
+              <div class="solicit-card" onclick="navigate('licencas',document.querySelector('[onclick*=licencas]'))">
+                <div><div style="font-size:13px;font-weight:500">Licença</div><div style="font-size:12px;color:var(--color-text-secondary)">Médica / gestante</div></div>
+                <div class="solicit-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-clipboard-heart" aria-hidden="true"></i></div>
+              </div>
+              <div class="solicit-card" onclick="navigate('contracheque',document.querySelector('[onclick*=contracheque]'))">
+                <div><div style="font-size:13px;font-weight:500">Contracheque</div><div style="font-size:12px;color:var(--color-text-secondary)">Abril disponível</div></div>
+                <div class="solicit-icon" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-file-invoice" aria-hidden="true"></i></div>
+              </div>
+              <div class="solicit-card" onclick="navigate('frequencia',document.querySelector('[onclick*=frequencia]'))">
+                <div><div style="font-size:13px;font-weight:500">Frequência</div><div style="font-size:12px;color:var(--color-text-secondary)">Banco de horas</div></div>
+                <div class="solicit-icon" style="background:var(--color-background-secondary);color:var(--color-text-secondary)"><i class="ti ti-clock" aria-hidden="true"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTRACHEQUE -->
+      <div class="page" id="page-contracheque">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <div class="section-title" style="margin:0">Contracheque — maio / 2026</div>
+          <div style="display:flex;gap:8px">
+            <select class="form-select" style="width:auto;padding:6px 12px;font-size:13px">
+              <option>Maio 2026</option><option>Abril 2026</option><option>Março 2026</option>
+            </select>
+            <button class="btn btn-sm"><i class="ti ti-download" aria-hidden="true"></i> PDF</button>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="avatar" style="width:48px;height:48px;font-size:15px">JF</div>
+              <div>
+                <div style="font-size:15px;font-weight:500">Josiane Fatima de Souza</div>
+                <div style="font-size:13px;color:var(--color-text-secondary)">Matrícula 42.891 · Analista Judiciário · SGP</div>
+                <div style="font-size:12px;color:var(--color-text-secondary)">Competência: 05/2026 · Admissão: 12/03/2015</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:13px;color:var(--color-text-secondary)">Salário líquido</div>
+              <div style="font-size:26px;font-weight:500;color:#185FA5">R$ 8.420,35</div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px">PROVENTOS</div>
+              <table style="font-size:13px">
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">Vencimento básico</td><td style="text-align:right;padding:6px 0;color:var(--color-text-primary)">R$ 7.650,00</td></tr>
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">Adicional de qualificação</td><td style="text-align:right;padding:6px 0;color:var(--color-text-primary)">R$ 1.530,00</td></tr>
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">Adicional de tempo</td><td style="text-align:right;padding:6px 0;color:var(--color-text-primary)">R$ 382,50</td></tr>
+                <tr style="border-top:0.5px solid var(--color-border-tertiary)"><td style="padding:8px 0;font-weight:500">Total proventos</td><td style="text-align:right;padding:8px 0;font-weight:500;color:var(--color-text-success)">R$ 9.562,50</td></tr>
+              </table>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px">DESCONTOS</div>
+              <table style="font-size:13px">
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">IRRF</td><td style="text-align:right;padding:6px 0;color:var(--color-text-danger)">- R$ 712,40</td></tr>
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">RPPS (previdência)</td><td style="text-align:right;padding:6px 0;color:var(--color-text-danger)">- R$ 382,50</td></tr>
+                <tr><td style="padding:6px 0;color:var(--color-text-primary)">Plano de saúde</td><td style="text-align:right;padding:6px 0;color:var(--color-text-danger)">- R$ 47,25</td></tr>
+                <tr style="border-top:0.5px solid var(--color-border-tertiary)"><td style="padding:8px 0;font-weight:500">Total descontos</td><td style="text-align:right;padding:8px 0;font-weight:500;color:var(--color-text-danger)">- R$ 1.142,15</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FÉRIAS -->
+      <div class="page" id="page-ferias">
+        <div class="section-title">Solicitação de férias</div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title"><i class="ti ti-calendar-plus" aria-hidden="true"></i> Nova solicitação</div>
+            <div id="ferias-form">
+              <div class="step-indicator">
+                <div class="step active" id="stp1"><div class="step-num">1</div> Período</div>
+                <div class="step-line"></div>
+                <div class="step" id="stp2"><div class="step-num">2</div> Revisão</div>
+                <div class="step-line"></div>
+                <div class="step" id="stp3"><div class="step-num">3</div> Confirmação</div>
+              </div>
+              <div id="ferias-step1">
+                <div class="form-group"><label class="form-label">Tipo de gozo</label><select class="form-select" id="ftp"><option>30 dias (integral)</option><option>20 + 10 dias</option><option>15 + 15 dias</option></select></div>
+                <div class="form-group"><label class="form-label">Data de início</label><input type="date" class="form-input" id="fdt" value="2026-07-01"></div>
+                <div class="form-group"><label class="form-label">Abono pecuniário?</label><select class="form-select"><option>Não</option><option>Sim (10 dias)</option></select></div>
+                <button class="btn btn-primary" onclick="feriasStep2()">Continuar</button>
+              </div>
+              <div id="ferias-step2" style="display:none">
+                <div class="alert alert-info"><i class="ti ti-info-circle" aria-hidden="true"></i> Verifique os dados antes de enviar.</div>
+                <table style="font-size:13px;margin-bottom:16px">
+                  <tr><td style="padding:6px 0;color:var(--color-text-secondary)">Servidor</td><td style="padding:6px 0;font-weight:500">Josiane Fatima de Souza</td></tr>
+                  <tr><td style="padding:6px 0;color:var(--color-text-secondary)">Tipo</td><td id="rev-tipo" style="padding:6px 0;font-weight:500">30 dias</td></tr>
+                  <tr><td style="padding:6px 0;color:var(--color-text-secondary)">Início</td><td id="rev-inicio" style="padding:6px 0;font-weight:500">01/07/2026</td></tr>
+                  <tr><td style="padding:6px 0;color:var(--color-text-secondary)">Término</td><td id="rev-fim" style="padding:6px 0;font-weight:500">30/07/2026</td></tr>
+                  <tr><td style="padding:6px 0;color:var(--color-text-secondary)">Aprovação</td><td style="padding:6px 0">Gestor direto → SGP</td></tr>
+                </table>
+                <div style="display:flex;gap:8px">
+                  <button class="btn" onclick="feriasBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Voltar</button>
+                  <button class="btn btn-primary" onclick="feriasConfirm()">Enviar solicitação</button>
+                </div>
+              </div>
+              <div id="ferias-step3" style="display:none">
+                <div class="alert alert-success"><i class="ti ti-circle-check" aria-hidden="true"></i> Solicitação enviada! Protocolo #2026-05-4421. Você será notificado por e-mail quando aprovada.</div>
+                <button class="btn" onclick="feriasReset()"><i class="ti ti-plus" aria-hidden="true"></i> Nova solicitação</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="ti ti-history" aria-hidden="true"></i> Histórico de férias</div>
+            <table>
+              <thead><tr><th>Período</th><th>Dias</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Jul/2026</td><td>30</td><td><span class="badge badge-amber">Pendente</span></td></tr>
+                <tr><td>Jul/2025</td><td>30</td><td><span class="badge badge-green">Gozadas</span></td></tr>
+                <tr><td>Jan/2025</td><td>30</td><td><span class="badge badge-green">Gozadas</span></td></tr>
+                <tr><td>Jul/2024</td><td>20</td><td><span class="badge badge-green">Gozadas</span></td></tr>
+                <tr><td>Fev/2024</td><td>10</td><td><span class="badge badge-green">Gozadas</span></td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:16px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+              <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px">Saldo disponível</div>
+              <div style="font-size:20px;font-weight:500">30 dias</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+              <div style="font-size:11px;color:var(--color-text-secondary);margin-top:4px">Período aquisitivo: 12/03/2025 a 11/03/2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LICENÇAS -->
+      <div class="page" id="page-licencas">
+        <div class="section-title">Licenças e afastamentos</div>
+        <div class="grid-3" style="margin-bottom:24px">
+          <div class="solicit-card" style="flex-direction:column;align-items:flex-start;gap:12px">
+            <div class="solicit-icon" style="background:var(--color-background-danger);color:var(--color-text-danger)"><i class="ti ti-heart-rate-monitor" aria-hidden="true"></i></div>
+            <div><div style="font-size:13px;font-weight:500">Licença médica</div><div style="font-size:12px;color:var(--color-text-secondary)">CID obrigatório para perícia</div></div>
+            <button class="btn btn-sm btn-primary">Solicitar</button>
+          </div>
+          <div class="solicit-card" style="flex-direction:column;align-items:flex-start;gap:12px">
+            <div class="solicit-icon" style="background:var(--color-background-success);color:var(--color-text-success)"><i class="ti ti-baby-carriage" aria-hidden="true"></i></div>
+            <div><div style="font-size:13px;font-weight:500">Licença gestante/paternidade</div><div style="font-size:12px;color:var(--color-text-secondary)">180 / 20 dias</div></div>
+            <button class="btn btn-sm btn-primary">Solicitar</button>
+          </div>
+          <div class="solicit-card" style="flex-direction:column;align-items:flex-start;gap:12px">
+            <div class="solicit-icon" style="background:var(--color-background-warning);color:var(--color-text-warning)"><i class="ti ti-school" aria-hidden="true"></i></div>
+            <div><div style="font-size:13px;font-weight:500">Capacitação / estudo</div><div style="font-size:12px;color:var(--color-text-secondary)">Necessita autorização SGP</div></div>
+            <button class="btn btn-sm btn-primary">Solicitar</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-list" aria-hidden="true"></i> Afastamentos recentes</div>
+          <table>
+            <thead><tr><th>Tipo</th><th>Início</th><th>Fim</th><th>Dias</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Licença médica</td><td>10/03/2026</td><td>12/03/2026</td><td>3</td><td><span class="badge badge-green">Aprovada</span></td></tr>
+              <tr><td>Capacitação</td><td>18/11/2025</td><td>22/11/2025</td><td>5</td><td><span class="badge badge-green">Aprovada</span></td></tr>
+              <tr><td>Licença médica</td><td>04/08/2025</td><td>04/08/2025</td><td>1</td><td><span class="badge badge-green">Aprovada</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FREQUÊNCIA -->
+      <div class="page" id="page-frequencia">
+        <div class="section-title">Frequência — maio / 2026</div>
+        <div class="grid-4" style="margin-bottom:20px">
+          <div class="metric"><div class="metric-label">Dias trabalhados</div><div class="metric-value">23</div></div>
+          <div class="metric"><div class="metric-label">Banco de horas</div><div class="metric-value">+12h40</div></div>
+          <div class="metric"><div class="metric-label">Faltas</div><div class="metric-value">0</div></div>
+          <div class="metric"><div class="metric-label">Teletrabalho</div><div class="metric-value">8 dias</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-calendar" aria-hidden="true"></i> Espelho de ponto</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px">
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Dom</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Seg</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Ter</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Qua</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Qui</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Sex</div>
+            <div style="font-size:11px;color:var(--color-text-secondary);text-align:center;padding:6px">Sáb</div>
+          </div>
+          <div id="calendar-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+        </div>
+      </div>
+
+      <!-- SERVIDORES -->
+      <div class="page" id="page-servidores">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <div class="section-title" style="margin:0">Servidores cadastrados</div>
+          <div style="display:flex;gap:8px">
+            <input type="text" class="form-input" placeholder="Buscar servidor..." style="width:200px;padding:6px 12px;font-size:13px" oninput="filterServidores(this.value)">
+            <button class="btn btn-sm btn-primary"><i class="ti ti-user-plus" aria-hidden="true"></i> Novo</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nome</th><th>Cargo</th><th>Setor</th><th>Admissão</th><th>Status</th></tr></thead>
+              <tbody id="servidores-tbody">
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px">JF</div>Josiane F. Souza</div></td><td>Analista Judiciário</td><td>SGP</td><td>12/03/2015</td><td><span class="badge badge-green">Ativo</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px;background:#0F6E56">CM</div>Carlos M. Pereira</div></td><td>Técnico Judiciário</td><td>STI</td><td>05/06/2018</td><td><span class="badge badge-green">Ativo</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px;background:#3B6D11">AP</div>Ana P. Rodrigues</div></td><td>Analista Judiciário</td><td>GAB</td><td>20/01/2012</td><td><span class="badge badge-green">Ativo</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px;background:#993C1D">RS</div>Roberto S. Lima</div></td><td>Analista Judiciário</td><td>SGP</td><td>08/09/2020</td><td><span class="badge badge-amber">Teletrabalho</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px;background:#534AB7">MG</div>Mariana G. Costa</div></td><td>Técnico Judiciário</td><td>CAE</td><td>14/04/2022</td><td><span class="badge badge-blue">Férias</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="width:28px;height:28px;font-size:11px;background:#854F0B">FT</div>Felipe T. Alves</div></td><td>Analista Judiciário</td><td>STI</td><td>22/11/2019</td><td><span class="badge badge-green">Ativo</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKFLOWS -->
+      <div class="page" id="page-workflows">
+        <div class="section-title">Aprovações pendentes</div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title"><i class="ti ti-git-pull-request" aria-hidden="true"></i> Aguardando sua aprovação</div>
+          <div id="workflow-items">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="avatar" style="width:36px;height:36px;font-size:12px;background:#534AB7">MG</div>
+                <div>
+                  <div style="font-size:13px;font-weight:500">Mariana G. Costa — Férias</div>
+                  <div style="font-size:12px;color:var(--color-text-secondary)">10/06 a 09/07/2026 · 30 dias · #2026-05-4398</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm" style="color:var(--color-text-danger);border-color:var(--color-border-danger)" onclick="approveItem(this,'neg')"><i class="ti ti-x" aria-hidden="true"></i> Negar</button>
+                <button class="btn btn-sm btn-primary" onclick="approveItem(this,'apr')"><i class="ti ti-check" aria-hidden="true"></i> Aprovar</button>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="avatar" style="width:36px;height:36px;font-size:12px;background:#993C1D">RS</div>
+                <div>
+                  <div style="font-size:13px;font-weight:500">Roberto S. Lima — Teletrabalho</div>
+                  <div style="font-size:12px;color:var(--color-text-secondary)">Junho 2026 · 20 dias · #2026-05-4401</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-sm" style="color:var(--color-text-danger);border-color:var(--color-border-danger)" onclick="approveItem(this,'neg')"><i class="ti ti-x" aria-hidden="true"></i> Negar</button>
+                <button class="btn btn-sm btn-primary" onclick="approveItem(this,'apr')"><i class="ti ti-check" aria-hidden="true"></i> Aprovar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-history" aria-hidden="true"></i> Histórico de aprovações</div>
+          <table>
+            <thead><tr><th>Servidor</th><th>Tipo</th><th>Data</th><th>Decisão</th></tr></thead>
+            <tbody>
+              <tr><td>Ana P. Rodrigues</td><td>Licença médica</td><td>10/03/2026</td><td><span class="badge badge-green">Aprovada</span></td></tr>
+              <tr><td>Carlos M. Pereira</td><td>Férias</td><td>02/02/2026</td><td><span class="badge badge-green">Aprovada</span></td></tr>
+              <tr><td>Felipe T. Alves</td><td>Capacitação</td><td>15/11/2025</td><td><span class="badge badge-red">Negada</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function navigate(page, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  if(el) el.classList.add('active');
+  const titles={dashboard:'Dashboard',contracheque:'Contracheque',ferias:'Férias',licencas:'Licenças',frequencia:'Frequência',servidores:'Servidores',workflows:'Aprovações'};
+  document.getElementById('hdr-title').textContent=titles[page]||page;
+}
+
+function feriasStep2(){
+  document.getElementById('ferias-step1').style.display='none';
+  document.getElementById('ferias-step2').style.display='block';
+  document.getElementById('stp1').classList.remove('active');
+  document.getElementById('stp1').classList.add('done');
+  document.getElementById('stp2').classList.add('active');
+  const tipo=document.getElementById('ftp').value;
+  const dt=document.getElementById('fdt').value;
+  document.getElementById('rev-tipo').textContent=tipo;
+  const d=new Date(dt+'T12:00:00');
+  const dias=tipo.includes('30')?30:20;
+  const fim=new Date(d);fim.setDate(fim.getDate()+dias-1);
+  document.getElementById('rev-inicio').textContent=d.toLocaleDateString('pt-BR');
+  document.getElementById('rev-fim').textContent=fim.toLocaleDateString('pt-BR');
+}
+function feriasBack(){
+  document.getElementById('ferias-step1').style.display='block';
+  document.getElementById('ferias-step2').style.display='none';
+  document.getElementById('stp1').classList.add('active');
+  document.getElementById('stp1').classList.remove('done');
+  document.getElementById('stp2').classList.remove('active');
+}
+function feriasConfirm(){
+  document.getElementById('ferias-step2').style.display='none';
+  document.getElementById('ferias-step3').style.display='block';
+  document.getElementById('stp2').classList.remove('active');
+  document.getElementById('stp2').classList.add('done');
+  document.getElementById('stp3').classList.add('active');
+}
+function feriasReset(){
+  document.getElementById('ferias-step1').style.display='block';
+  document.getElementById('ferias-step3').style.display='none';
+  ['stp1','stp2','stp3'].forEach(id=>{const s=document.getElementById(id);s.classList.remove('active','done');});
+  document.getElementById('stp1').classList.add('active');
+}
+
+function approveItem(btn,type){
+  const row=btn.closest('[style*="flex"]');
+  const name=row.querySelector('[style*="font-weight"]').textContent;
+  row.style.opacity='0.5';
+  row.style.pointerEvents='none';
+  const msg=type==='apr'?'✓ Aprovado':'✗ Negado';
+  const color=type==='apr'?'var(--color-text-success)':'var(--color-text-danger)';
+  btn.parentElement.innerHTML=`<span style="font-size:13px;font-weight:500;color:${color}">${msg}</span>`;
+}
+
+function filterServidores(q){
+  const rows=document.querySelectorAll('#servidores-tbody tr');
+  rows.forEach(r=>{
+    r.style.display=r.textContent.toLowerCase().includes(q.toLowerCase())?'':'none';
+  });
+}
+
+(function buildCalendar(){
+  const grid=document.getElementById('calendar-grid');
+  const tipos=['','P','P','P','P','P','','','P','P','P','P','P','','','P','P','P','P','P','','','P','P','P','P','P','','','P','P'];
+  const labels={P:'Pres.',T:'Tel.',F:'Falta','':''};
+  for(let i=0;i<31;i++){
+    const d=document.createElement('div');
+    const day=i+1;
+    const tipo=tipos[i]||'';
+    const isWeekend=(i+3)%7<2;
+    d.style.cssText=`border-radius:6px;padding:6px 4px;text-align:center;font-size:11px;background:${isWeekend?'var(--color-background-tertiary)':tipo==='P'?'var(--color-background-info)':tipo==='T'?'var(--color-background-success)':'var(--color-background-secondary)'};`;
+    d.innerHTML=`<div style="font-weight:500;color:var(--color-text-primary)">${day}</div><div style="color:var(--color-text-secondary);font-size:10px">${isWeekend?'—':labels[tipo]||'—'}</div>`;
+    grid.appendChild(d);
+  }
+})();
+</script>
