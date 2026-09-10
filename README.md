@@ -65,7 +65,7 @@ Backend: `http://localhost:3333`
 
 O backend cria um usuário de demonstração no primeiro start:
 
-- E-mail: `josiane@rhdigital.local`
+- E-mail: `gabriela@rhdigital.local`
 - Senha: `123456`
 
 Essas credenciais são apenas para o projeto acadêmico.

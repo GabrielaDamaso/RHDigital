@@ -198,7 +198,7 @@ Response:
   "token": "token-de-autenticacao",
   "usuario": {
     "id": 1,
-    "nome": "Josiane Fatima de Souza",
+    "nome": "Gabriela Damaso",
     "email": "usuario@email.com"
   }
 }

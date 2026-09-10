@@ -3,7 +3,7 @@ import './pages.css';
 
 export function Dashboard() {
   return <div className="page">
-    <div className="page-heading"><div><h1>Olá, Josiane</h1><p>Confira seus principais indicadores.</p></div></div>
+    <div className="page-heading"><div><h1>Olá, Gabriela</h1><p>Confira seus principais indicadores.</p></div></div>
     <div className="metrics">
       <div className="metric"><span>Férias disponíveis</span><strong>{dashboardMock.vacationDays} dias</strong><small>Saldo atual</small></div>
       <div className="metric"><span>Banco de horas</span><strong>{dashboardMock.timeBank}</strong><small>Saldo acumulado</small></div>

@@ -4,7 +4,11 @@ import { vacationApi } from '../services/api';
 import type { VacationRequest, VacationType } from '../types';
 import './pages.css';
 
-const labels: Record<VacationType, string> = { '30_dias': '30 dias' };
+const labels: Record<VacationType, string> = {
+  '30_dias': '30 dias',
+  '20_mais_10': '20 dias + 10 dias',
+  '15_mais_15': '15 dias + 15 dias',
+};
 
 export function Ferias() {
   const [type, setType] = useState<VacationType>('30_dias');
@@ -30,7 +34,7 @@ export function Ferias() {
     <div className="page-heading"><div><h1>Férias</h1><p>Solicite e acompanhe seus períodos de férias.</p></div></div>
     <div className="two-columns">
       <div className="card"><h2>Nova solicitação</h2><form onSubmit={submit}>
-        <label>Período<select value={type} onChange={(e) => setType(e.target.value as VacationType)}><option value="30_dias">30 dias</option></select></label>
+        <label>Período<select value={type} onChange={(e) => setType(e.target.value as VacationType)}>{Object.entries(labels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
         <label>Data de início<input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required /></label>
         <div className="hint">O período final é calculado automaticamente conforme o tipo selecionado.</div>
         {message && <div className="success">{message}</div>}{error && <div className="error">{error}</div>}

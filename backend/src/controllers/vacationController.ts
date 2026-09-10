@@ -4,7 +4,7 @@ import type { AuthenticatedRequest } from '../middleware/auth.js';
 import { createVacation, decideVacation, getPendingApprovals, getUserVacations } from '../services/vacationService.js';
 
 const vacationSchema = z.object({
-  type: z.literal('30_dias'),
+  type: z.enum(['30_dias', '20_mais_10', '15_mais_15']),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
 });
 

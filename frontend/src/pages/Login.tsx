@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import { authApi } from '../services/api';
+import type { User } from '../types';
 import './pages.css';
 
 export function Login() {
-  const [email, setEmail] = useState('josiane@rhdigital.local');
+  const [email, setEmail] = useState('gabriela@rhdigital.local');
   const [senha, setSenha] = useState('123456');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function submit(event: FormEvent) {
     event.preventDefault(); setError(''); setLoading(true);
     try {
       const result = await authApi.login(email, senha);
       localStorage.setItem('rh_token', result.token);
+      const user: User = { id: result.usuario.id, name: result.usuario.nome, email: result.usuario.email };
+      login(user);
       navigate('/');
     } catch (err) { setError(err instanceof Error ? err.message : 'Não foi possível entrar.'); }
     finally { setLoading(false); }
