@@ -1,0 +1,39 @@
+.page-heading { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
+.page-heading h1 { margin:0 0 5px; font-size:22px; }
+.page-heading p, .card p { margin:0; color:#6b6a67; font-size:13px; }
+.metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:18px; }
+.metric, .card { background:#fff; border:1px solid #ddd; border-radius:12px; }
+.metric { padding:16px; }
+.metric span, .metric small { display:block; color:#6b6a67; font-size:12px; }
+.metric strong { display:block; margin:7px 0 3px; font-size:20px; }
+.card { padding:20px; margin-bottom:18px; }
+.card h2 { margin:0 0 16px; font-size:15px; }
+.two-columns { display:grid; grid-template-columns:2fr 1fr; gap:18px; }
+form { display:grid; gap:15px; }
+label { display:grid; gap:6px; color:#5f5e5a; font-size:12px; }
+input, select { border:1px solid #c9c8c4; border-radius:8px; background:#fff; padding:9px 10px; color:#1a1a18; }
+.primary-button, .actions button { border:0; border-radius:8px; padding:9px 14px; background:#185fa5; color:#fff; cursor:pointer; font-weight:600; }
+.primary-button:disabled { opacity:.6; cursor:wait; }
+.danger-button { background:#a32d2d !important; }
+.hint, .success, .error { padding:10px 12px; border-radius:8px; font-size:12px; }
+.hint { background:#f5f5f4; color:#6b6a67; }
+.success { background:#eaf3de; color:#3b6d11; }
+.error { background:#fcebeb; color:#a32d2d; }
+.big-number { font-size:36px; font-weight:700; margin:10px 0; }
+.big-number small { font-size:14px; font-weight:400; }
+.table-wrap { overflow:auto; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+th, td { padding:10px 9px; border-bottom:1px solid #eee; text-align:left; white-space:nowrap; }
+th { color:#6b6a67; font-weight:600; }
+.actions { display:flex; gap:8px; }
+.status { display:inline-flex; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:600; }
+.status-pendente { background:#faeeda; color:#854f0b; }
+.status-aprovada { background:#eaf3de; color:#3b6d11; }
+.status-negada { background:#fcebeb; color:#a32d2d; }
+.login-page { min-height:100vh; display:grid; place-items:center; background:#eeede9; padding:20px; }
+.login-card { width:min(420px,100%); background:#fff; border:1px solid #ddd; border-radius:14px; padding:30px; box-shadow:0 18px 50px rgba(0,0,0,.05); }
+.login-card .brand-badge { margin-bottom:14px; }
+.login-card h1 { margin:0 0 6px; font-size:24px; }
+.login-card p { color:#6b6a67; font-size:13px; margin:0 0 22px; line-height:1.5; }
+.login-card small { display:block; margin-top:16px; color:#888780; font-size:11px; }
+@media (max-width: 850px) { .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } .two-columns { grid-template-columns:1fr; } }
