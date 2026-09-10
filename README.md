@@ -76,6 +76,9 @@ Essas credenciais são apenas para o projeto acadêmico.
 - `GET /api/auth/me`
 - `GET /api/ferias`
 - `POST /api/ferias`
+- `GET /api/ferias/:id`
+- `PATCH /api/ferias/:id`
+- `DELETE /api/ferias/:id`
 - `GET /api/aprovacoes`
 - `PATCH /api/aprovacoes/:id`
 

@@ -1,7 +1,7 @@
 import type { Response } from 'express';
 import { z } from 'zod';
 import type { AuthenticatedRequest } from '../middleware/auth.js';
-import { createVacation, decideVacation, getPendingApprovals, getUserVacations } from '../services/vacationService.js';
+import { cancelVacation, createVacation, decideVacation, editVacation, getPendingApprovals, getUserVacations, getVacation } from '../services/vacationService.js';
 
 const vacationSchema = z.object({
   type: z.enum(['30_dias', '20_mais_10', '15_mais_15']),
@@ -21,6 +21,52 @@ export function createVacationController(req: AuthenticatedRequest, res: Respons
     return;
   }
   res.status(201).json(createVacation(req.userId!, parsed.data));
+}
+
+export function getVacationController(req: AuthenticatedRequest, res: Response) {
+  const vacation = getVacation(req.userId!, Number(req.params.id));
+  if (!vacation) {
+    res.status(404).json({ message: 'Solicitação não encontrada.' });
+    return;
+  }
+  res.json(vacation);
+}
+
+export function updateVacationController(req: AuthenticatedRequest, res: Response) {
+  const id = Number(req.params.id);
+  const parsed = vacationSchema.safeParse(req.body);
+  if (!Number.isInteger(id) || !parsed.success) {
+    res.status(400).json({ message: 'Dados de férias inválidos.' });
+    return;
+  }
+  const result = editVacation(req.userId!, id, parsed.data);
+  if (result.kind === 'not_found') {
+    res.status(404).json({ message: 'Solicitação não encontrada.' });
+    return;
+  }
+  if (result.kind === 'finalized') {
+    res.status(409).json({ message: 'Solicitações finalizadas não podem ser editadas.' });
+    return;
+  }
+  res.json(result.vacation);
+}
+
+export function deleteVacationController(req: AuthenticatedRequest, res: Response) {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) {
+    res.status(400).json({ message: 'Identificador inválido.' });
+    return;
+  }
+  const result = cancelVacation(req.userId!, id);
+  if (result === 'not_found') {
+    res.status(404).json({ message: 'Solicitação não encontrada.' });
+    return;
+  }
+  if (result === 'finalized') {
+    res.status(409).json({ message: 'Solicitações finalizadas não podem ser excluídas.' });
+    return;
+  }
+  res.status(204).send();
 }
 
 export function listApprovalsController(_req: AuthenticatedRequest, res: Response) {

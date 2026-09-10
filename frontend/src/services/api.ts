@@ -1,3 +1,5 @@
+import type { User, VacationRequest } from '../types';
+
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3333/api';
 
 export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
@@ -27,8 +29,12 @@ export const authApi = {
 
 export const vacationApi = {
   list: () => apiFetch<VacationRequest[]>('/ferias'),
+  get: (id: number) => apiFetch<VacationRequest>(`/ferias/${id}`),
   create: (payload: { type: string; startDate: string }) =>
     apiFetch<VacationRequest>('/ferias', { method: 'POST', body: JSON.stringify(payload) }),
+  update: (id: number, payload: { type: string; startDate: string }) =>
+    apiFetch<VacationRequest>(`/ferias/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
+  remove: (id: number) => apiFetch<void>(`/ferias/${id}`, { method: 'DELETE' }),
 };
 
 export const approvalApi = {

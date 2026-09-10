@@ -56,6 +56,20 @@ export function create(input: {
   return findById(Number(result.lastInsertRowid))!;
 }
 
+export function updateByUser(id: number, userId: number, input: { type: string; startDate: string; endDate: string }): VacationRequest | undefined {
+  db.prepare(`
+    UPDATE vacation_requests
+    SET type = @type, start_date = @startDate, end_date = @endDate
+    WHERE id = @id AND user_id = @userId
+  `).run({ id, userId, ...input });
+  return findById(id);
+}
+
+export function removeByUser(id: number, userId: number): boolean {
+  const result = db.prepare('DELETE FROM vacation_requests WHERE id = ? AND user_id = ?').run(id, userId);
+  return result.changes > 0;
+}
+
 export function updateStatus(id: number, status: VacationStatus): VacationRequest {
   db.prepare('UPDATE vacation_requests SET status = ? WHERE id = ?').run(status, id);
   return findById(id)!;

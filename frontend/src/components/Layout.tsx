@@ -18,6 +18,13 @@ const demoLinks = [
 export function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const initials = user?.name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((name) => name[0])
+    .join('')
+    .toUpperCase() ?? 'US';
 
   function handleLogout() {
     logout();
@@ -49,7 +56,7 @@ export function Layout() {
           ))}
         </nav>
         <div className="user-area">
-          <div className="avatar">JS</div>
+          <div className="avatar">{initials}</div>
           <div className="user-info">
             <strong>{user?.name ?? 'Usuário'}</strong>
             <span>{user?.email ?? ''}</span>

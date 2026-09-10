@@ -15,6 +15,7 @@ input, select { border:1px solid #c9c8c4; border-radius:8px; background:#fff; pa
 .primary-button, .actions button { border:0; border-radius:8px; padding:9px 14px; background:#185fa5; color:#fff; cursor:pointer; font-weight:600; }
 .primary-button:disabled { opacity:.6; cursor:wait; }
 .danger-button { background:#a32d2d !important; }
+.secondary-button { border:1px solid #c9c8c4; border-radius:8px; padding:9px 14px; background:#fff; color:#3f3e3a; cursor:pointer; font-weight:600; }
 .hint, .success, .error { padding:10px 12px; border-radius:8px; font-size:12px; }
 .hint { background:#f5f5f4; color:#6b6a67; }
 .success { background:#eaf3de; color:#3b6d11; }
@@ -26,6 +27,13 @@ table { width:100%; border-collapse:collapse; font-size:12px; }
 th, td { padding:10px 9px; border-bottom:1px solid #eee; text-align:left; white-space:nowrap; }
 th { color:#6b6a67; font-weight:600; }
 .actions { display:flex; gap:8px; }
+.modal-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:20px; background:rgba(26,26,24,.38); }
+.modal { width:min(440px,100%); padding:22px; background:#fff; border:1px solid #ddd; border-radius:12px; box-shadow:0 18px 50px rgba(0,0,0,.18); }
+.modal h2 { margin:0 0 10px; font-size:17px; }
+.modal p { margin:0; color:#6b6a67; font-size:13px; line-height:1.55; }
+.modal-actions button { border:1px solid #c9c8c4; border-radius:8px; padding:9px 14px; background:#fff; color:#3f3e3a; cursor:pointer; font-weight:600; }
+.modal-actions .delete-button:hover { border-color:#e7bcbc; background:#fff1f1; color:#a32d2d; }
+.modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:22px; }
 .status { display:inline-flex; padding:4px 8px; border-radius:999px; font-size:11px; font-weight:600; }
 .status-pendente { background:#faeeda; color:#854f0b; }
 .status-aprovada { background:#eaf3de; color:#3b6d11; }
