@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import './layout.css';
 
 const links = [
-  { to: '/', label: 'Dashboard' },
+  { to: '/portal', label: 'Dashboard' },
   { to: '/ferias', label: 'Férias' },
   { to: '/aprovacoes', label: 'Aprovações' },
 ];
@@ -44,7 +44,7 @@ export function Layout() {
         <nav className="nav">
           <span className="nav-section">Portal</span>
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to} end={link.to === '/'} className="nav-item">
+            <NavLink key={link.to} to={link.to} className="nav-item">
               {link.label}
             </NavLink>
           ))}

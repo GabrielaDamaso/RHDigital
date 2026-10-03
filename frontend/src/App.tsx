@@ -6,6 +6,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Demo } from './pages/Demo';
 import { Ferias } from './pages/Ferias';
 import { Login } from './pages/Login';
+import { Landing } from './pages/landingpage/Landing';
 
 function ProtectedRoutes() {
   const { user, loading } = useAuth();
@@ -16,9 +17,10 @@ function ProtectedRoutes() {
 
 export function App() {
   return <Routes>
+    <Route path="/" element={<Landing />} />
     <Route path="/login" element={<Login />} />
     <Route element={<ProtectedRoutes />}>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/portal" element={<Dashboard />} />
       <Route path="/ferias" element={<Ferias />} />
       <Route path="/aprovacoes" element={<Aprovacoes />} />
       <Route path="/demo/:section" element={<Demo />} />

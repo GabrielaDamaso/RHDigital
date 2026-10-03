@@ -5,6 +5,7 @@ import './database/seed.js';
 import { authRoutes } from './routes/authRoutes.js';
 import { vacationRoutes } from './routes/vacationRoutes.js';
 import { approvalRoutes } from './routes/approvalRoutes.js';
+import { contactRoutes } from './routes/contactRoutes.js';
 
 const app = express();
 app.use(cors({ origin: config.corsOrigin }));
@@ -14,6 +15,7 @@ app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/ferias', vacationRoutes);
 app.use('/api/aprovacoes', approvalRoutes);
+app.use('/api/contatos', contactRoutes);
 
 app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);

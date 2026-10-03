@@ -21,7 +21,7 @@ export function Login() {
       localStorage.setItem('rh_token', result.token);
       const user: User = { id: result.usuario.id, name: result.usuario.nome, email: result.usuario.email };
       login(user);
-      navigate('/');
+      navigate('/portal');
     } catch (err) { setError(err instanceof Error ? err.message : 'Não foi possível entrar.'); }
     finally { setLoading(false); }
   }
