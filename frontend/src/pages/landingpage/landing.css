@@ -12,6 +12,8 @@
   font-family: "Public Sans", "Segoe UI", sans-serif;
 }
 
+html:has(.landing) { scroll-behavior: smooth; }
+
 .landing * { box-sizing: border-box; }
 .landing a { color: inherit; }
 .landing .wrap { width: min(1160px, calc(100% - 3rem)); margin: auto; }
@@ -37,6 +39,7 @@
 .light-button { border: 1px solid var(--landing-line); background: var(--landing-white); border-radius: 999px; padding: .8rem 1.3rem; font-weight: 700; cursor: pointer; }
 .portal-link { margin-left: 1rem; font-weight: 700; }
 .section { padding: 5rem 0; border-top: 1px solid var(--landing-line); }
+.landing :target { scroll-margin-top: 92px; }
 .section h2, .contact-layout h2 { font-size: 2.5rem; margin: .5rem 0 1rem; }
 .section-text { max-width: 700px; font-size: 1.1rem; color: var(--landing-muted); }
 .feature-row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 2rem; padding: 2.2rem 0; border-top: 1px solid var(--landing-line); }
@@ -59,6 +62,10 @@
 .landing footer { padding: 2rem 0; background: var(--landing-ink); color: var(--landing-paper); }
 .landing footer .wrap { display: flex; justify-content: space-between; gap: 1rem; }
 .landing footer span { font-size: .85rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.landing) { scroll-behavior: auto; }
+}
 
 @media (max-width: 760px) {
   .landing .wrap, .landing-nav { width: min(calc(100% - 2rem), 1160px); }
