@@ -1,17 +1,18 @@
 # Landing page e contatos
 
-A landing page pública é servida pelo frontend principal na rota `/`. O formulário envia mensagens para a API e usa a mesma instância do backend e o mesmo banco SQLite do portal.
+A landing page pública é servida pelo frontend principal na rota `/`. O formulário envia mensagens para a API e usa a mesma instância do backend e o mesmo banco SQLite do portal. A consulta e o gerenciamento das mensagens ficam em uma seção autenticada do portal, na rota `/mensagens`.
 
 ## Organização
 
-- Página e estilos: `frontend/src/pages/landingpage/`
+- Página pública e estilos: `frontend/src/pages/landingpage/`
+- Caixa de entrada do portal: `frontend/src/pages/Mensagens.tsx`
 - Cliente HTTP e operações de contato: `frontend/src/services/api.ts`
 - Tipos da interface: `frontend/src/types/contact.ts`
 - API de contatos: `backend/src/routes/contactRoutes.ts`
 - Controller, regras e persistência: `backend/src/controllers/contactController.ts`, `backend/src/services/contactService.ts` e `backend/src/repositories/contactRepository.ts`
 - Tipos do backend: `backend/src/types/contact.ts`
 
-O módulo da landing page fica separado das páginas do portal. O CRUD de contatos também fica separado por responsabilidade no backend; ele compartilha a infraestrutura existente de servidor e SQLite.
+O módulo da landing page fica separado das páginas do portal e permite apenas o envio de novas mensagens. A equipe autenticada consulta, edita e exclui as mensagens na seção Mensagens do portal. O CRUD de contatos no backend compartilha a infraestrutura existente de servidor e SQLite.
 
 ## Rotas de contato
 

@@ -6,12 +6,16 @@ import { authRoutes } from './routes/authRoutes.js';
 import { vacationRoutes } from './routes/vacationRoutes.js';
 import { approvalRoutes } from './routes/approvalRoutes.js';
 import { contactRoutes } from './routes/contactRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import { openApiDocument } from './docs/openapi.js';
 
 const app = express();
 app.use(cors({ origin: config.corsOrigin }));
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
+app.get('/api/docs/openapi.json', (_req, res) => res.json(openApiDocument));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 app.use('/api/auth', authRoutes);
 app.use('/api/ferias', vacationRoutes);
 app.use('/api/aprovacoes', approvalRoutes);

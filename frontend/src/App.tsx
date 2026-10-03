@@ -6,6 +6,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Demo } from './pages/Demo';
 import { Ferias } from './pages/Ferias';
 import { Login } from './pages/Login';
+import { Mensagens } from './pages/Mensagens';
 import { Landing } from './pages/landingpage/Landing';
 
 function ProtectedRoutes() {
@@ -23,6 +24,7 @@ export function App() {
       <Route path="/portal" element={<Dashboard />} />
       <Route path="/ferias" element={<Ferias />} />
       <Route path="/aprovacoes" element={<Aprovacoes />} />
+      <Route path="/mensagens" element={<Mensagens />} />
       <Route path="/demo/:section" element={<Demo />} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />

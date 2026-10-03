@@ -1,6 +1,22 @@
 .page-heading { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
 .page-heading h1 { margin:0 0 5px; font-size:22px; }
 .page-heading p, .card p { margin:0; color:#6b6a67; font-size:13px; }
+.contact-message-count { min-width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:#e6f1fb; color:#185fa5; font-size:14px; }
+.contact-edit-form { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.contact-edit-form label { font-size:12px; }
+.contact-edit-form input, .contact-edit-form select, .contact-edit-form textarea { width:100%; border:1px solid #c9c8c4; border-radius:8px; background:#fff; padding:9px 10px; color:#1a1a18; }
+.contact-edit-form textarea { resize:vertical; }
+.contact-edit-message, .contact-edit-actions { grid-column:1 / -1; }
+.contact-messages > h2 { margin-bottom:8px; }
+.contact-message-list { display:grid; }
+.contact-message-row { display:flex; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid #eee; }
+.contact-message-row:last-child { border-bottom:0; padding-bottom:0; }
+.contact-message-content { min-width:0; flex:1; }
+.contact-message-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; font-size:12px; }
+.contact-message-meta a, .contact-message-meta span, .contact-message-meta time { color:#6b6a67; }
+.contact-message-meta time { margin-left:auto; font-size:11px; }
+.contact-message-content > p { margin:10px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.55; }
+.contact-message-actions { align-items:flex-start; }
 .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:18px; }
 .metric, .card { background:#fff; border:1px solid #ddd; border-radius:12px; }
 .metric { padding:16px; }
@@ -45,3 +61,4 @@ th { color:#6b6a67; font-weight:600; }
 .login-card p { color:#6b6a67; font-size:13px; margin:0 0 22px; line-height:1.5; }
 .login-card small { display:block; margin-top:16px; color:#888780; font-size:11px; }
 @media (max-width: 850px) { .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } .two-columns { grid-template-columns:1fr; } }
+@media (max-width: 600px) { .contact-edit-form { grid-template-columns:1fr; } .contact-edit-message, .contact-edit-actions { grid-column:auto; } .contact-message-row { flex-direction:column; } .contact-message-meta time { margin-left:0; } .contact-message-actions { justify-content:flex-end; } }

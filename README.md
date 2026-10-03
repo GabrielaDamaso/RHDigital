@@ -44,6 +44,8 @@ Esse comando inicia o backend e o frontend juntos. Encerre os dois processos com
 - Portal de RH: <http://localhost:5173/portal>
 - API: <http://localhost:3333/api>
 - Health check: <http://localhost:3333/api/health>
+- Swagger UI: <http://localhost:3333/api/docs>
+- OpenAPI JSON: <http://localhost:3333/api/docs/openapi.json>
 
 Também é possível iniciar cada parte separadamente com `npm run dev:backend` ou `npm run dev:frontend`.
 
@@ -88,6 +90,8 @@ npm run build:frontend
 Os mesmos comandos podem ser executados dentro de `backend` ou `frontend` com `npm run build`.
 
 ## API
+
+A documentação interativa da API está disponível em `/api/docs` enquanto o backend estiver rodando. Use **Authorize** na interface para informar o JWT retornado por `POST /api/auth/login`; as rotas de férias e aprovações exigem esse token. As rotas de contatos são públicas.
 
 - `POST /api/auth/login`
 - `GET /api/auth/me`

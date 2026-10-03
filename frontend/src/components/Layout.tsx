@@ -6,6 +6,7 @@ const links = [
   { to: '/portal', label: 'Dashboard' },
   { to: '/ferias', label: 'Férias' },
   { to: '/aprovacoes', label: 'Aprovações' },
+  { to: '/mensagens', label: 'Mensagens' },
 ];
 
 const demoLinks = [
